@@ -26,7 +26,7 @@ export default function App() {
     { id: 5, name: 'Slash', age: '47', tone: 71, category: 'GRANTED', index: 71 },
   ]);
 
-  // Skin tone slider colors matching continuous scale
+  // Continuous skin tone spectrum gradient background
   const getSkinColor = (pct) => {
     if (pct < 20) return '#fbf1e6';
     if (pct < 40) return '#f3d3b4';
@@ -36,13 +36,13 @@ export default function App() {
     return '#3d2314';
   };
 
-  // Toggle Muted
+  // Toggle audio muting
   const toggleMute = () => {
     sound.muted = !muted;
     setMuted(!muted);
   };
 
-  // Slide ticks
+  // Slide tick noises
   const handleSliderChange = (e) => {
     const val = parseInt(e.target.value, 10);
     setTone(val);
@@ -56,11 +56,11 @@ export default function App() {
 
   if (tone <= 35) {
     emoji = '🙁';
-    statusText = 'ACCESS DENIED';
+    statusText = 'HELL NO';
     passCategory = 'DENIED';
   } else if (tone >= 70) {
-    emoji = '🙂';
-    statusText = 'ACCESS GRANTED';
+    emoji = '😎'; // Cool shades sunglasses emoji matching the sketch/smug feel
+    statusText = 'ALLOWED';
     passCategory = 'GRANTED';
   }
 
@@ -97,7 +97,7 @@ export default function App() {
         statusText: statusText
       });
 
-      // Play correct audio outcome
+      // Play outcome sounds
       if (passCategory === 'GRANTED') {
         sound.playSuccess();
       } else if (passCategory === 'RESTRICTED') {
@@ -150,7 +150,7 @@ export default function App() {
               {/* LCD Readout Status Screen */}
               <ResultScreen result={diagnosticResult} />
 
-              {/* iOS Styled Form Group */}
+              {/* iOS Styled Form Group with Live Avatar Preview */}
               <InputForm 
                 name={name} 
                 setName={setName} 
@@ -158,7 +158,8 @@ export default function App() {
                 setAge={setAge} 
                 tone={tone} 
                 onSliderChange={handleSliderChange} 
-                diagnosticActive={diagnosticActive} 
+                diagnosticActive={diagnosticActive}
+                getSkinColor={getSkinColor}
               />
 
               {/* Giant Diagnostic Scan Button */}
