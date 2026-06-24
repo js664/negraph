@@ -25,7 +25,7 @@ export default function App() {
     { id: 5, name: 'Slash', age: 'elder', tone: 71, category: 'GRANTED', index: 71 },
   ]);
 
-  // Continuous skin tone spectrum
+  // Calibration keys
   const getSkinColor = (pct) => {
     if (pct < 20) return '#fbf1e6';
     if (pct < 40) return '#f3d3b4';
@@ -35,34 +35,34 @@ export default function App() {
     return '#3d2314';
   };
 
-  // Toggle audio muting
+  // Toggle muting
   const toggleMute = () => {
     sound.muted = !muted;
     setMuted(!muted);
   };
 
-  // Slide tick noises
+  // Slider change handler
   const handleSliderChange = (e) => {
     const val = parseInt(e.target.value, 10);
     setTone(val);
     sound.playTick(200 + val * 6, 0.012);
   };
 
-  // Emoji and category logic
+  // Comical status mappings
   let emoji = '😐';
-  let statusText = '⚠️ RISKY. DON\'T SAY IT.';
-  let descriptionText = "Keep your windows rolled up. Don't say it in public.";
+  let statusText = '⚠️ HOLD THE FUCK UP.';
+  let descriptionText = "Listen, you are in the grey zone. Don't say it in public. Roll the windows up and whisper it if you must, but you are playing with fire.";
   let passCategory = 'RESTRICTED';
 
   if (tone <= 35) {
     emoji = '🙁';
-    statusText = '❌ HELL NO.';
-    descriptionText = 'Go back to Starbucks. Absolute zero clearance.';
+    statusText = '❌ NO. HELL NO.';
+    descriptionText = 'You are white as printer paper. Do not say it. Do not hum it. Go back to Starbucks and drink your latte before you get hurt.';
     passCategory = 'DENIED';
   } else if (tone >= 70) {
     emoji = '😎';
-    statusText = '✅ YES. GO AHEAD.';
-    descriptionText = 'Pass fully authorized. Say it loud, homie.';
+    statusText = '✅ ALL CLEAR, HOMIE.';
+    descriptionText = 'You are good to go. The pass is fully authorized. Say it loud and proud.';
     passCategory = 'GRANTED';
   }
 
@@ -82,7 +82,7 @@ export default function App() {
     sound.playTick(150, 0.08);
   };
 
-  // Run diagnostics scan sweep animation
+  // Run scanning animation
   const runDiagnostic = () => {
     if (diagnosticActive) return;
     sound.playScanSweep();
@@ -92,7 +92,7 @@ export default function App() {
     setTimeout(() => {
       setDiagnosticActive(false);
       setDiagnosticResult({
-        name: name || 'SUBJECT UNKNOWN',
+        name: name || 'ANONYMOUS FOOL',
         age: ageGroup,
         tone: tone,
         category: passCategory,
@@ -100,7 +100,7 @@ export default function App() {
         descriptionText: descriptionText
       });
 
-      // Play outcome sounds
+      // Play correct audio outcome
       if (passCategory === 'GRANTED') {
         sound.playSuccess();
       } else if (passCategory === 'RESTRICTED') {
@@ -112,7 +112,7 @@ export default function App() {
       // Add to log list
       const newRecord = {
         id: Date.now(),
-        name: name || 'Subject Unknown',
+        name: name || 'Anonymous Fool',
         age: ageGroup,
         tone: tone,
         category: passCategory,
@@ -142,7 +142,7 @@ export default function App() {
         <div className="flex-1 ios-linen overflow-y-auto px-3.5 py-3 flex flex-col space-y-3.5 pb-20 select-none">
           {activeTab === 'scanner' && (
             <>
-              {/* Cartesian Coordinates Graph / Biometric View */}
+              {/* Central Holographic Avatar Viewer */}
               <AvatarView 
                 tone={tone} 
                 emoji={emoji} 
@@ -152,7 +152,7 @@ export default function App() {
                 getSkinColor={getSkinColor} 
               />
 
-              {/* iOS Styled Form Group with Live Avatar Selector */}
+              {/* iOS Styled Form Group with Overcomplicated Latched Slider */}
               <InputForm 
                 name={name} 
                 setName={setName} 
