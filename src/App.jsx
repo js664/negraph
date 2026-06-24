@@ -12,6 +12,7 @@ import { sound } from './utils/audio';
 export default function App() {
   const [tone, setTone] = useState(50);
   const [age, setAge] = useState(35); // Numeric age 1 to 100 set by Y coordinate
+  const [gender, setGender] = useState('man'); // 'man' or 'woman'
   const [name, setName] = useState('');
   const [diagnosticActive, setDiagnosticActive] = useState(false);
   const [diagnosticResult, setDiagnosticResult] = useState(null);
@@ -45,11 +46,10 @@ export default function App() {
   const handleGraphUpdate = (x, y) => {
     setTone(x);
     setAge(y);
-    // Tick sound based on distance moves
     sound.playTick(150 + x * 5 + y * 2, 0.01);
   };
 
-  // Comical verdict mappings
+  // Comical verdicts
   let emoji = '😐';
   let statusText = '⚠️ RISK LEVEL CRITICAL. DO NOT SAY IT.';
   let descriptionText = "Look, shit is real risky. Unless you are rapping alone in your locked car, do NOT say it. You will get beat the fuck up.";
@@ -72,6 +72,7 @@ export default function App() {
     setName('');
     setAge(35);
     setTone(50);
+    setGender('man');
     setDiagnosticResult(null);
     setActiveTab('scanner');
     sound.playTick(300, 0.05);
@@ -96,6 +97,7 @@ export default function App() {
         name: name || 'ANONYMOUS FOOL',
         age: age,
         tone: tone,
+        gender: gender,
         category: passCategory,
         statusText: statusText,
         descriptionText: descriptionText
@@ -139,34 +141,64 @@ export default function App() {
           onReset={handleReset} 
         />
 
-        {/* Scrollable Page Body - Scrollbar Hidden, Absolute Fit */}
-        <div className="flex-grow ios-linen overflow-y-auto px-3.5 py-3 flex flex-col space-y-3 pb-20 select-none justify-between h-[480px]">
+        {/* content container - zero padding, flex layout, fit directly above tab bar */}
+        <div className="flex-grow ios-linen p-3 flex flex-col justify-between select-none overflow-hidden h-[480px] min-h-[480px]">
           {activeTab === 'scanner' && (
-            <>
-              {/* Target hologram name input at top */}
-              <div className="flex items-center bg-black/45 border border-[#333] rounded-lg px-2.5 py-1.5 w-full select-none text-[12px] h-[34px]">
-                <label className="text-[9px] font-mono text-gray-500 font-extrabold uppercase mr-2.5">Subject</label>
-                <input 
-                  type="text" 
-                  placeholder="Name of target fool..." 
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  disabled={diagnosticActive}
-                  className="flex-1 bg-transparent border-none text-white text-[12px] font-bold outline-none placeholder-gray-600 disabled:opacity-50"
-                />
+            <div className="flex flex-col space-y-2.5 h-full justify-between">
+              
+              {/* Single row combining Name input (left) and Gender Selector (right) */}
+              <div className="flex space-x-2 w-full h-[34px] items-center flex-shrink-0">
+                
+                {/* Name Input */}
+                <div className="flex-1 flex items-center bg-black/45 border border-[#333] rounded-lg px-2.5 py-1.5 select-none text-[12px] h-full">
+                  <label className="text-[9px] font-mono text-gray-500 font-extrabold uppercase mr-2.5">Subject</label>
+                  <input 
+                    type="text" 
+                    placeholder="Name..." 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    disabled={diagnosticActive}
+                    className="flex-grow bg-transparent border-none text-white text-[12px] font-bold outline-none placeholder-gray-600 disabled:opacity-50 min-w-0"
+                  />
+                </div>
+
+                {/* Gender toggle buttons */}
+                <div className="flex border border-[#333] rounded-lg bg-black/45 overflow-hidden text-[9px] font-bold h-full flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setGender('man')}
+                    disabled={diagnosticActive}
+                    className={`px-2.5 flex items-center justify-center cursor-pointer transition-colors ${
+                      gender === 'man' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-gray-200'
+                    }`}
+                  >
+                    👨 Male
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setGender('woman')}
+                    disabled={diagnosticActive}
+                    className={`px-2.5 flex items-center justify-center cursor-pointer transition-colors ${
+                      gender === 'woman' ? 'bg-pink-600 text-white' : 'text-gray-400 hover:text-gray-200'
+                    }`}
+                  >
+                    👩 Female
+                  </button>
+                </div>
               </div>
 
-              {/* Avatar Biometric Panel (Now with react-nice-avatar) */}
+              {/* Avatar View (Now with react-nice-avatar and gender properties) */}
               <AvatarView 
                 tone={tone} 
                 age={age}
+                gender={gender}
                 emoji={emoji} 
                 diagnosticActive={diagnosticActive} 
                 diagnosticResult={diagnosticResult}
                 getSkinColor={getSkinColor} 
               />
 
-              {/* 2D coordinates Graph Selector (Replaces sliders) */}
+              {/* 2D Coordinates Input Selector */}
               <InputGraph 
                 tone={tone}
                 age={age}
@@ -174,11 +206,11 @@ export default function App() {
                 diagnosticActive={diagnosticActive}
               />
 
-              {/* Minimal scan diagnostic trigger button */}
+              {/* Minimal scan trigger button - fits perfectly on screen */}
               <button 
                 onClick={runDiagnostic}
                 disabled={diagnosticActive}
-                className={`w-full py-3 rounded-lg font-bold text-[15px] text-white select-none cursor-pointer hover:brightness-110 active:scale-98 transition-all h-[42px] flex items-center justify-center ${
+                className={`w-full rounded-lg font-bold text-[14px] text-white select-none cursor-pointer hover:brightness-110 active:scale-98 transition-all h-[38px] flex-shrink-0 flex items-center justify-center ${
                   diagnosticActive ? 'opacity-60 cursor-not-allowed' : ''
                 } ${
                   passCategory === 'GRANTED' ? 'ios-btn-blue' : 
@@ -187,11 +219,11 @@ export default function App() {
               >
                 {diagnosticActive ? "RUNNING GENETICS..." : "SCAN TARGET"}
               </button>
-            </>
+            </div>
           )}
 
           {activeTab === 'history' && (
-            <div className="h-[430px] overflow-hidden flex flex-col">
+            <div className="h-full overflow-hidden flex flex-col justify-between">
               <DatabaseTab 
                 history={history} 
                 onClear={() => setHistory([])} 
@@ -201,7 +233,7 @@ export default function App() {
           )}
 
           {activeTab === 'about' && (
-            <div className="h-[430px] overflow-hidden flex flex-col justify-center">
+            <div className="h-full overflow-hidden flex flex-col justify-center">
               <AboutTab />
             </div>
           )}

@@ -9,8 +9,8 @@ export default function TabBar({ activeTab, setActiveTab, playTick }) {
   ];
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-b from-[#222222] to-[#0f0f0f] border-t border-black flex justify-around items-center px-1 z-30 select-none">
-      <div className="gloss-overlay absolute inset-x-0 top-0 h-7"></div>
+    <div className="relative h-14 w-full bg-gradient-to-b from-[#222222] to-[#0f0f0f] border-t border-black flex justify-around items-center px-1 select-none flex-shrink-0">
+      <div className="gloss-overlay absolute inset-x-0 top-0 h-7 pointer-events-none"></div>
       
       {tabs.map((tab) => {
         const IconComponent = tab.icon;
