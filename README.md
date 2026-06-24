@@ -1,8 +1,8 @@
 # the negraph 📱
 
-An interactive, front-end parody replica of the fictional diagnostic smartphone application **"The Negraph"** from the classic *Key & Peele* comedy sketch. Built with early-2010s skeuomorphic iOS aesthetics, responsive canvas positioning, physical sound effects, and diagnostic history tracking.
+An interactive, front-end parody replica of the fictional diagnostic smartphone application **"The Negraph"** from the classic *Key & Peele* comedy sketch. Built with a modular React structure, Tailwind CSS, and physical sound effects.
 
-✨ **[Live Demo (GitHub Pages)](https://js664.github.io/negraph/)**
+✨ **[Live Demo (Vercel)](https://negraph.vercel.app/)**
 
 ---
 
@@ -34,32 +34,55 @@ The application is a visual homage to the iconic **iOS 5 / iOS 6 era (circa 2012
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Code Architecture (Multiple Files)
 
-* **Core Structure:** HTML5 & Vanilla ES6 JS
-* **Framework:** React 18 (via UMD CDN)
-* **Style Engine:** Tailwind CSS v3 (via Play CDN) + Custom Skeuomorphic CSS
-* **Audio Synthesis:** Web Audio API (oscillators, filters, gain nodes)
-* **Deployment:** GitHub Pages (Single-page static app, zero external build dependencies)
+The project has been refactored into a structured, production-ready React codebase:
+* `src/main.jsx`: Mounts the app and imports global styles.
+* `src/App.jsx`: Manages reactive state (tone slider, diagnostic trigger, tab view navigation, muted settings, scan history).
+* `src/components/PhoneFrame.jsx`: iPhone 4/5 hardware frame template with speaker slot, front camera, and interactive home button.
+* `src/components/StatusBar.jsx`: iOS signal strength, network, time, and battery display.
+* `src/components/NavBar.jsx`: Header panel with reset and mute selectors.
+* `src/components/GraphArea.jsx`: Coordinate canvas with grid rendering, $Y = X$ diagonal line, YES/NO stamp readouts, and the floating emoji.
+* `src/components/InputForm.jsx`: Grouped list form fields for name, age, and gradient slider.
+* `src/components/ResultScreen.jsx`: Green glowing LCD system log showing computed scanning status results.
+* `src/components/DatabaseTab.jsx`: Database entries history lists.
+* `src/components/AboutTab.jsx`: Historical background about the Negraph scientific calibration theory.
+* `src/components/TabBar.jsx`: Glossy bottom menu bar with Lucide icons.
+* `src/utils/audio.js`: Synthesizer helper managing audio nodes (oscillators, biquad lowpass filters, gain envelopes).
 
 ---
 
 ## 🚀 Local Development & Execution
 
-Since the app has zero build tools or package dependencies, running it is simple:
+To run the project locally, install dependencies and launch Vite dev server:
 
 1. Clone this repository:
    ```bash
    git clone https://github.com/js664/negraph.git
    cd negraph
    ```
-2. Double-click `index.html` or open it with any web browser of your choice.
+2. Install node dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open the displayed URL (e.g. `http://localhost:5173`) in your browser.
 
-Alternatively, serve it locally with Python:
-```bash
-python -m http.server 8000
-```
-Then visit `http://localhost:8000`.
+---
+
+## ⚡ Deployment on Vercel
+
+This app is optimized for immediate zero-config deployment on Vercel:
+
+1. Connect your GitHub repository to your Vercel account.
+2. Select the `negraph` project.
+3. Keep default build settings (Vite is auto-detected):
+   * **Build Command:** `npm run build`
+   * **Output Directory:** `dist`
+4. Click **Deploy**.
 
 ---
 

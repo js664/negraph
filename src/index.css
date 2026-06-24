@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+/* Custom fonts */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,600;1,800&display=swap');
+
+/* Premium Skeuomorphic Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #1a1c1e;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 0);
+  background-size: 16px 16px;
+  background-position: center;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background grid overlay */
+.bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(34, 197, 94, 0.03) 0%, rgba(0,0,0,0.85) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* iOS Linen Canvas Pattern (Inside Phone App) */
+.ios-linen {
+  background-color: #d1d5db;
+  background-image: 
+    radial-gradient(rgba(0,0,0,0.15) 15%, transparent 16%),
+    radial-gradient(rgba(0,0,0,0.15) 15%, transparent 16%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+}
+
+/* iOS 5 Navigation Bar Glossy Effect */
+.ios-navbar {
+  background: linear-gradient(to bottom, #7d96af 0%, #567595 50%, #3e6082 50%, #355375 100%);
+  border-top: 1px solid #a3b8cc;
+  border-bottom: 1px solid #1f3044;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* iOS 5 Grouped Cell Inset Shadow */
+.ios-group-container {
+  background: #f9f9f9;
+  border: 1px solid #ababab;
+  box-shadow: 0 1px 0 #ffffff;
+}
+
+.ios-cell {
+  border-bottom: 1px solid #e0e0e0;
+}
+.ios-cell:last-child {
+  border-bottom: none;
+}
+
+/* 3D Skeuomorphic Buttons */
+.ios-btn-blue {
+  background: linear-gradient(to bottom, #60abf2 0%, #2f84df 50%, #1566c5 50%, #1153a1 100%);
+  border: 1px solid #144988;
+  border-top: 1px solid #78c0ff;
+  box-shadow: 
+    0 1px 0 rgba(255,255,255,0.4) inset,
+    0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.6);
+}
+.ios-btn-blue:active {
+  background: linear-gradient(to bottom, #1153a1 0%, #1566c5 50%, #2f84df 50%, #60abf2 100%);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5) inset;
+}
+
+.ios-btn-gray {
+  background: linear-gradient(to bottom, #9d9d9d 0%, #707070 50%, #555555 50%, #464646 100%);
+  border: 1px solid #333;
+  border-top: 1px solid #cccccc;
+  box-shadow: 
+    0 1px 0 rgba(255,255,255,0.4) inset,
+    0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.6);
+}
+.ios-btn-gray:active {
+  background: linear-gradient(to bottom, #464646 0%, #555555 50%, #707070 50%, #9d9d9d 100%);
+}
+
+.ios-btn-red {
+  background: linear-gradient(to bottom, #f26b6b 0%, #df3333 50%, #c51818 50%, #a11111 100%);
+  border: 1px solid #881414;
+  border-top: 1px solid #ff7878;
+  box-shadow: 
+    0 1px 0 rgba(255,255,255,0.4) inset,
+    0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.6);
+}
+.ios-btn-red:active {
+  background: linear-gradient(to bottom, #a11111 0%, #c51818 50%, #df3333 50%, #f26b6b 100%);
+}
+
+/* Glossy Overlay */
+.gloss-overlay {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+}
+
+/* Realistic 3D iPhone Bezel & Hardware */
+.iphone-body {
+  box-shadow: 
+    0 0 0 10px #1a1a1a,
+    0 0 0 12px #333333,
+    0 0 0 14px #4d4d4d,
+    0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+.iphone-home-btn {
+  box-shadow: 
+    inset 0 2px 5px rgba(0,0,0,0.6),
+    0 1px 1px rgba(255,255,255,0.1);
+}
+
+/* LCD Screen Grid and Laser styling */
+.lcd-grid {
+  background-size: 12px 12px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Laser Line Animation */
+@keyframes scan {
+  0% { top: 0%; opacity: 0.8; }
+  50% { top: 100%; opacity: 0.8; }
+  100% { top: 0%; opacity: 0.8; }
+}
+.laser-scan-line {
+  height: 2px;
+  background: linear-gradient(to right, transparent, #22c55e, transparent);
+  box-shadow: 0 0 8px #22c55e;
+  position: absolute;
+  width: 100%;
+  animation: scan 2s linear infinite;
+  display: none;
+}
+.scanning .laser-scan-line {
+  display: block;
+}
+
+/* Custom slider styling for physical appearance */
+.ios-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e0e0e0 40%, #ababab 80%, #7d7d7d 100%);
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.4),
+    inset 0 1px 1px white;
+  border: 1px solid #7d7d7d;
+  cursor: pointer;
+}
+
+.ios-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e0e0e0 40%, #ababab 80%, #7d7d7d 100%);
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.4),
+    inset 0 1px 1px white;
+  border: 1px solid #7d7d7d;
+  cursor: pointer;
+}
+
+/* LED blink status */
+@keyframes led-blink-green {
+  0%, 100% { box-shadow: 0 0 4px #22c55e; background-color: #22c55e; }
+  50% { box-shadow: 0 0 12px #4ade80, 0 0 4px #22c55e; background-color: #4ade80; }
+}
+@keyframes led-blink-red {
+  0%, 100% { box-shadow: 0 0 4px #ef4444; background-color: #ef4444; }
+  50% { box-shadow: 0 0 12px #f87171, 0 0 4px #ef4444; background-color: #ef4444; }
+}
+.led-green {
+  animation: led-blink-green 1s infinite;
+}
+.led-red {
+  animation: led-blink-red 1s infinite;
+}
