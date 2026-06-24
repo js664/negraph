@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import StatusBar from './components/StatusBar';
 import NavBar from './components/NavBar';
-import GraphArea from './components/GraphArea';
+import AvatarView from './components/AvatarView';
 import InputForm from './components/InputForm';
-import ResultScreen from './components/ResultScreen';
 import DatabaseTab from './components/DatabaseTab';
 import AboutTab from './components/AboutTab';
 import TabBar from './components/TabBar';
@@ -13,20 +12,20 @@ import { sound } from './utils/audio';
 export default function App() {
   const [tone, setTone] = useState(50);
   const [name, setName] = useState('');
-  const [age, setAge] = useState('');
+  const [ageGroup, setAgeGroup] = useState('adult'); // 'child', 'adult', 'elder'
   const [diagnosticActive, setDiagnosticActive] = useState(false);
   const [diagnosticResult, setDiagnosticResult] = useState(null);
   const [activeTab, setActiveTab] = useState('scanner');
   const [muted, setMuted] = useState(false);
   const [history, setHistory] = useState([
-    { id: 1, name: 'Keegan-Michael Key', age: '41', tone: 78, category: 'GRANTED', index: 78 },
-    { id: 2, name: 'Jordan Peele', age: '33', tone: 82, category: 'GRANTED', index: 82 },
-    { id: 3, name: 'Zach Braff', age: '37', tone: 12, category: 'DENIED', index: 12 },
-    { id: 4, name: 'Michael Scott', age: '45', tone: 5, category: 'DENIED', index: 5 },
-    { id: 5, name: 'Slash', age: '47', tone: 71, category: 'GRANTED', index: 71 },
+    { id: 1, name: 'Keegan-Michael Key', age: 'adult', tone: 78, category: 'GRANTED', index: 78 },
+    { id: 2, name: 'Jordan Peele', age: 'adult', tone: 82, category: 'GRANTED', index: 82 },
+    { id: 3, name: 'Zach Braff', age: 'adult', tone: 12, category: 'DENIED', index: 12 },
+    { id: 4, name: 'Michael Scott', age: 'adult', tone: 5, category: 'DENIED', index: 5 },
+    { id: 5, name: 'Slash', age: 'elder', tone: 71, category: 'GRANTED', index: 71 },
   ]);
 
-  // Continuous skin tone spectrum gradient background
+  // Continuous skin tone spectrum
   const getSkinColor = (pct) => {
     if (pct < 20) return '#fbf1e6';
     if (pct < 40) return '#f3d3b4';
@@ -49,25 +48,28 @@ export default function App() {
     sound.playTick(200 + val * 6, 0.012);
   };
 
-  // Emoji calculations
+  // Emoji and category logic
   let emoji = '😐';
-  let statusText = 'RESTRICTED';
+  let statusText = '⚠️ RISKY. DON\'T SAY IT.';
+  let descriptionText = "Keep your windows rolled up. Don't say it in public.";
   let passCategory = 'RESTRICTED';
 
   if (tone <= 35) {
     emoji = '🙁';
-    statusText = 'HELL NO';
+    statusText = '❌ HELL NO.';
+    descriptionText = 'Go back to Starbucks. Absolute zero clearance.';
     passCategory = 'DENIED';
   } else if (tone >= 70) {
-    emoji = '😎'; // Cool shades sunglasses emoji matching the sketch/smug feel
-    statusText = 'ALLOWED';
+    emoji = '😎';
+    statusText = '✅ YES. GO AHEAD.';
+    descriptionText = 'Pass fully authorized. Say it loud, homie.';
     passCategory = 'GRANTED';
   }
 
   // Reset form
   const handleReset = () => {
     setName('');
-    setAge('');
+    setAgeGroup('adult');
     setTone(50);
     setDiagnosticResult(null);
     setActiveTab('scanner');
@@ -91,10 +93,11 @@ export default function App() {
       setDiagnosticActive(false);
       setDiagnosticResult({
         name: name || 'SUBJECT UNKNOWN',
-        age: age || '??',
+        age: ageGroup,
         tone: tone,
         category: passCategory,
-        statusText: statusText
+        statusText: statusText,
+        descriptionText: descriptionText
       });
 
       // Play outcome sounds
@@ -110,7 +113,7 @@ export default function App() {
       const newRecord = {
         id: Date.now(),
         name: name || 'Subject Unknown',
-        age: age || 'Unknown',
+        age: ageGroup,
         tone: tone,
         category: passCategory,
         index: tone
@@ -139,27 +142,25 @@ export default function App() {
         <div className="flex-1 ios-linen overflow-y-auto px-3.5 py-3 flex flex-col space-y-3.5 pb-20 select-none">
           {activeTab === 'scanner' && (
             <>
-              {/* Cartesian Coordinates Graph */}
-              <GraphArea 
+              {/* Cartesian Coordinates Graph / Biometric View */}
+              <AvatarView 
                 tone={tone} 
                 emoji={emoji} 
+                ageGroup={ageGroup} 
                 diagnosticActive={diagnosticActive} 
+                diagnosticResult={diagnosticResult}
                 getSkinColor={getSkinColor} 
               />
 
-              {/* LCD Readout Status Screen */}
-              <ResultScreen result={diagnosticResult} />
-
-              {/* iOS Styled Form Group with Live Avatar Preview */}
+              {/* iOS Styled Form Group with Live Avatar Selector */}
               <InputForm 
                 name={name} 
                 setName={setName} 
-                age={age} 
-                setAge={setAge} 
+                ageGroup={ageGroup} 
+                setAgeGroup={setAgeGroup} 
                 tone={tone} 
                 onSliderChange={handleSliderChange} 
                 diagnosticActive={diagnosticActive}
-                getSkinColor={getSkinColor}
               />
 
               {/* Giant Diagnostic Scan Button */}

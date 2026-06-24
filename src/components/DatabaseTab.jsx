@@ -1,6 +1,14 @@
 import React from 'react';
 
 export default function DatabaseTab({ history, onClear, getSkinColor }) {
+  // Format age group display string
+  const formatAge = (age) => {
+    if (age === 'child') return 'Child 👶';
+    if (age === 'adult') return 'Adult 🧔';
+    if (age === 'elder') return 'Elder 👴';
+    return age; // fallback
+  };
+
   return (
     <div className="space-y-3 w-full">
       <div className="flex justify-between items-center mb-1 select-none">
@@ -30,12 +38,12 @@ export default function DatabaseTab({ history, onClear, getSkinColor }) {
                   style={{ backgroundColor: getSkinColor(record.index) }}
                 >
                   <span className="text-xs leading-none">
-                    {record.index <= 35 ? '🙁' : record.index >= 70 ? '🙂' : '😐'}
+                    {record.index <= 35 ? '🙁' : record.index >= 70 ? '😎' : '😐'}
                   </span>
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs font-bold text-gray-800 leading-tight">{record.name}</span>
-                  <span className="text-[10px] text-gray-500 font-semibold">Age: {record.age} • Index: {record.index}%</span>
+                  <span className="text-[10px] text-gray-500 font-semibold">Age: {formatAge(record.age)} • Index: {record.index}%</span>
                 </div>
               </div>
               
@@ -44,7 +52,7 @@ export default function DatabaseTab({ history, onClear, getSkinColor }) {
                 record.category === 'RESTRICTED' ? 'bg-amber-100 border-amber-300 text-amber-700' :
                 'bg-red-100 border-red-300 text-red-700'
               }`}>
-                {record.category}
+                {record.category === 'GRANTED' ? 'ALLOWED' : record.category === 'RESTRICTED' ? 'RISKY' : 'HELL NO'}
               </span>
             </div>
           ))
